@@ -1,4 +1,3 @@
-
 <div class="card mb+">
     <div class="pl+ pt+ pb+ pr">
         <div class="float-right" style="margin-top: -5px">
@@ -96,4 +95,17 @@
         <pivot ng-if="item.pivot.editMode" data="item.pivot.data" config="item.pivot.config" edit-mode="true"></pivot>
         <pivot ng-if="!item.pivot.editMode" data="item.pivot.data" config="item.pivot.config" edit-mode="false"></pivot>
     </div>
+
+
+
+</div>
+
+
+
+<div class="card__actions p+"style="max-height: 560px; overflow-x: auto; overflow-y: auto;">
+    <div>
+        <button ng-click="vars.pivot.editMode = true">Edit Mode</button><button ng-click="vars.pivot.editMode = false">View Mode</button>
+    </div>
+    <pivot ng-if="vars.pivot.editMode" data="vars.pivot.data" config="vars.pivot.config" edit-mode="true"></pivot>
+    <pivot ng-if="!vars.pivot.editMode" data="vars.pivot.data" config="vars.pivot.config" edit-mode="false"></pivot>
 </div>

@@ -7,20 +7,74 @@ global_keywords_tables="";
 	'use strict';
 
 	angular.module(smi2.app.name).controller('SqlController', SqlController);
-	SqlController.$inject = ['$scope', '$rootScope', '$window','localStorageService', 'LxNotificationService','API'];
+	SqlController.$inject = ['$scope', '$rootScope', '$window','localStorageService', 'LxNotificationService','API','pivot'];
 
 	/**
 	 * @ngdoc controller
 	 * @name smi2.controller:SqlController
 	 * @description Контроллер выполнения SQL запросов к БД
 	 */
-	function SqlController($scope, $rootScope, $window, localStorageService, LxNotificationService, API) {
+	function SqlController($scope, $rootScope, $window, localStorageService, LxNotificationService, API,pivot) {
+
+
+
+
+
+
+
+
+
+
+		// require(["d3"], function(d3) {
+		// 	require([ "c3",'jquery-ui.min','pivot','c3_renderers'], function(c3) {
+		// 		window.c3 = c3;
+		// 		function pivotUi() {
+		//
+		// 			alert('pivotUi');
+		// 			var derivers = $.pivotUtilities.derivers;
+		// 			var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers);
+		//
+		// 			alert('from sample');
+		//
+		// 			$("#output").pivotUI($scope.products, {
+		// 				renderers: renderers,
+		// 				cols: ["videoName"], rows: ["likeCount"],
+		// 				rendererName: "Area Chart"
+		// 			});
+		// 		}
+		// 	});
+		// });
+		// require(["d3"], function(d3) {
+		// 	require([ "c3",'jquery-ui.min','pivot','c3_renderers'], function(c3) {
+		// 		window.c3 = c3;
+		// 		// ......
+		// 	});
+		// });
+        //
+		// require([ 'jquery-ui.min','pivot'], function(c3) {
+		// 	alert('ok1');
+		// });
+		// function pivotUi() {
+		// 	console.warn($.pivotUtilities);
+		// 	var derivers = $.pivotUtilities.derivers;
+		// 	var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers);
+		// 	// var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.gchart_renderers, $.pivotUtilities.d3_renderers);
+		// 	$("#output").pivotUI($scope.products, {});
+		// };
+		// pivotUi();alert('pivotUi2');
+		//
+		//
+		//
+		//
+
+
 
 		$scope.vars = {
 			sql: '',
 			button_run: 'Выполнить ⌘ + ⏎',
 			sqlHistory: localStorageService.get('sqlHistory') || [],
 			format: {},
+			pivot:{data:{a:1,b:2},config:{},editMode:false},
 			results: [],
 			formats: [{
 				name: 'Таблица',
@@ -69,19 +123,19 @@ global_keywords_tables="";
 			text: 'SQL'
 		}];
         //
-		// Предотвращаю потерю SQL данных при закрытии окна
-		$window.onbeforeunload = function(event) {
-			if ($scope.vars.sql !== '') {
-				var message = 'Хотите покинуть страницу?';
-				if (typeof event == 'undefined') {
-					event = window.event;
-				}
-				if (event) {
-					event.returnValue = message;
-				}
-				return message;
-			}
-		};
+        // // Предотвращаю потерю SQL данных при закрытии окна
+        // $window.onbeforeunload = function(event) {
+			// if ($scope.vars.sql !== '') {
+			// 	var message = 'Хотите покинуть страницу?';
+			// 	if (typeof event == 'undefined') {
+			// 		event = window.event;
+			// 	}
+			// 	if (event) {
+			// 		event.returnValue = message;
+			// 	}
+			// 	return message;
+			// }
+        // };
 
 
 		// Предотвращаю потерю SQL данных при смене стейта
@@ -122,7 +176,7 @@ global_keywords_tables="";
 				if ($scope.vars.format.type=='pivot')
 				{
 					$scope.vars.results[numquery]={statistics:statistics,pivot:{data:angular.fromJson(data),config:{},editMode:false}};
-					pivotUI();
+
 				}
 				else
 				{
