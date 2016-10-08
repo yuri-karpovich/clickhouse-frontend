@@ -1,3 +1,4 @@
+
 <div class="card mb+">
     <div class="pl+ pt+ pb+ pr">
         <div class="float-right" style="margin-top: -5px">
@@ -83,8 +84,16 @@
             байт прочитано: <b>{{item.statistics.bytes_read}}</b>
         </div>
     </div>
-    <div class="card__actions p+" style="max-height: 560px; overflow-x: auto; overflow-y: auto;">
+    <div class="card__actions p+" ng-if="item.sqlData" style="max-height: 560px; overflow-x: auto; overflow-y: auto;">
         <span ng-if="item.sqlData === null" class="fs-caption">нет данных</span>
         <div ng-if="item.sqlData !== null" ng-bind-html="item.sqlData">x</div>
+    </div>
+
+    <div class="card__actions p+" ng-if="item.pivot" style="max-height: 560px; overflow-x: auto; overflow-y: auto;">
+        <div>
+            <button ng-click="item.pivot.editMode = true">Edit Mode</button><button ng-click="item.pivot.editMode = false">View Mode</button>
+        </div>
+        <pivot ng-if="item.pivot.editMode" data="item.pivot.data" config="item.pivot.config" edit-mode="true"></pivot>
+        <pivot ng-if="!item.pivot.editMode" data="item.pivot.data" config="item.pivot.config" edit-mode="false"></pivot>
     </div>
 </div>

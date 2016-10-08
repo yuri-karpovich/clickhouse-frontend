@@ -7,7 +7,7 @@ global_keywords_tables="";
 	'use strict';
 
 	angular.module(smi2.app.name).controller('SqlController', SqlController);
-	SqlController.$inject = ['$scope', '$rootScope', '$window', 'localStorageService', 'LxNotificationService','API'];
+	SqlController.$inject = ['$scope', '$rootScope', '$window','localStorageService', 'LxNotificationService','API'];
 
 	/**
 	 * @ngdoc controller
@@ -37,6 +37,12 @@ global_keywords_tables="";
 			}, {
 				name: 'CREATE/INSERT',
 				sql: 'null'
+			}, {
+				name: 'PivotJS',
+				sql: 'format JSON',
+				type: 'pivot'
+				// https://gist.github.com/c0r3yz/8ba37a3009e2a719210c
+				// https://github.com/nicolaskruchten/pivottable/issues/208
 			}],
 			db: null,
 			editor: null,
@@ -112,14 +118,25 @@ global_keywords_tables="";
 
 			API.query(sql, format ,true, extendSettings).then(function(data) {
 				statistics = data.statistics;
-				if ($scope.vars.format.name == $scope.vars.formats[0].name) {
-					sqlData = API.dataToHtml(angular.fromJson(data));
+
+				if ($scope.vars.format.type=='pivot')
+				{
+					$scope.vars.results[numquery]={statistics:statistics,pivot:{data:angular.fromJson(data),config:{},editMode:false}};
+					pivotUI();
 				}
 				else
 				{
-					sqlData = '<pre class="fs-caption">' + angular.toJson(data, true) + '</pre>';
+
+					if ($scope.vars.format.name == $scope.vars.formats[0].name) {
+						sqlData = API.dataToHtml(angular.fromJson(data));
+					}
+					else
+					{
+						sqlData = '<pre class="fs-caption">' + angular.toJson(data, true) + '</pre>';
+					}
+					$scope.vars.results[numquery]={statistics:statistics,sqlData:sqlData};
 				}
-				$scope.vars.results[numquery]={statistics:statistics,sqlData:sqlData};
+
 			}, function(response) {
 				LxNotificationService.error('Ошибка');
 				statistics = null;
