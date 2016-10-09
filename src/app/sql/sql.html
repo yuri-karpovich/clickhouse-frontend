@@ -88,24 +88,17 @@
         <div ng-if="item.sqlData !== null" ng-bind-html="item.sqlData">x</div>
     </div>
 
-    <div class="card__actions p+" ng-if="item.pivot" style="max-height: 560px; overflow-x: auto; overflow-y: auto;">
-        <div>
-            <button ng-click="item.pivot.editMode = true">Edit Mode</button><button ng-click="item.pivot.editMode = false">View Mode</button>
-        </div>
-        <pivot ng-if="item.pivot.editMode" data="item.pivot.data" config="item.pivot.config" edit-mode="true"></pivot>
-        <pivot ng-if="!item.pivot.editMode" data="item.pivot.data" config="item.pivot.config" edit-mode="false"></pivot>
+    <div class="card__actions p+" ng-if="item.pivot" style="width:100%;overflow-x: auto; overflow-y: auto;">
+        <pivot  data="item.pivot.data" config="item.pivot.config" edit-mode="true"></pivot>
     </div>
-
-
 
 </div>
 
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 
-
-<div class="card__actions p+"style="max-height: 560px; overflow-x: auto; overflow-y: auto;">
-    <div>
-        <button ng-click="vars.pivot.editMode = true">Edit Mode</button><button ng-click="vars.pivot.editMode = false">View Mode</button>
-    </div>
-    <pivot ng-if="vars.pivot.editMode" data="vars.pivot.data" config="vars.pivot.config" edit-mode="true"></pivot>
-    <pivot ng-if="!vars.pivot.editMode" data="vars.pivot.data" config="vars.pivot.config" edit-mode="false"></pivot>
+<div class="card__actions p+"  style="width:100%;overflow-x: auto; overflow-y: auto;">
+    <pivot  data="vars.pivot.data" config="vars.pivot.config" edit-mode="true"></pivot>
 </div>

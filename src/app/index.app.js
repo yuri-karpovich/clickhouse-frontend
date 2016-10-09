@@ -13,5 +13,6 @@
 		'LocalStorageModule',
 		'lumx',
 		'ui.ace'
+
 	]);
 })();

@@ -7,14 +7,14 @@ global_keywords_tables="";
 	'use strict';
 
 	angular.module(smi2.app.name).controller('SqlController', SqlController);
-	SqlController.$inject = ['$scope', '$rootScope', '$window','localStorageService', 'LxNotificationService','API','pivot'];
+	SqlController.$inject = ['$scope', '$rootScope', '$window','localStorageService', 'LxNotificationService','API'];
 
 	/**
 	 * @ngdoc controller
 	 * @name smi2.controller:SqlController
 	 * @description Контроллер выполнения SQL запросов к БД
 	 */
-	function SqlController($scope, $rootScope, $window, localStorageService, LxNotificationService, API,pivot) {
+	function SqlController($scope, $rootScope, $window, localStorageService, LxNotificationService, API) {
 
 
 
@@ -68,13 +68,14 @@ global_keywords_tables="";
 		//
 
 
+		$scope.data = [{ name : "Erick", age : "23" }, { name : "Diego", age : "28" }];
 
 		$scope.vars = {
 			sql: '',
+
 			button_run: 'Выполнить ⌘ + ⏎',
 			sqlHistory: localStorageService.get('sqlHistory') || [],
 			format: {},
-			pivot:{data:{a:1,b:2},config:{},editMode:false},
 			results: [],
 			formats: [{
 				name: 'Таблица',
@@ -95,9 +96,19 @@ global_keywords_tables="";
 				name: 'PivotJS',
 				sql: 'format JSON',
 				type: 'pivot'
-				// https://gist.github.com/c0r3yz/8ba37a3009e2a719210c
-				// https://github.com/nicolaskruchten/pivottable/issues/208
 			}],
+			pivot: {
+			data: [
+				{ "Province": "Quebec", "Party": "NDP", "Age": 22, "Name": "Liu, Laurin", "Gender": "Female" },
+				{ "Province": "Quebec", "Party": "Bloc Quebecois", "Age": 43, "Name": "Mourani, Maria", "Gender": "Female" },
+				{ "Province": "Quebec", "Party": "NDP", "Age": "", "Name": "Sellah, Djaouida", "Gender": "Female" },
+				{ "Province": "Quebec", "Party": "NDP", "Age": 72, "Name": "St-Denis, Lise", "Gender": "Female" },
+				{ "Province": "British Columbia", "Party": "Liberal", "Age": 71, "Name": "Fry, Hedy", "Gender": "Female" },
+				{ "Province": "Quebec", "Party": "NDP", "Age": 70, "Name": "Turmel, Nycole", "Gender": "Female" }
+			],
+			config: {},
+			editMode: false
+			},
 			db: null,
 			editor: null,
 			limitRows: localStorageService.get('editorLimitRows') || 500,
@@ -175,8 +186,8 @@ global_keywords_tables="";
 
 				if ($scope.vars.format.type=='pivot')
 				{
-					$scope.vars.results[numquery]={statistics:statistics,pivot:{data:angular.fromJson(data),config:{},editMode:false}};
-
+					$scope.vars.results[numquery]={statistics:statistics,pivot:{data:angular.fromJson(data).data,config:{},editMode:true}};
+console.warn($scope.vars.results[numquery]);
 				}
 				else
 				{
